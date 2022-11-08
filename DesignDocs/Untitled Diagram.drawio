@@ -1,0 +1,133 @@
+<mxfile host="app.diagrams.net" modified="2022-11-03T16:23:55.053Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 Edg/107.0.1418.26" etag="p9_cWxArze3qVa4dPcYg" version="20.5.1" type="github">
+  <diagram id="00eKUhh65OacD7GRwaRf" name="Page-1">
+    <mxGraphModel dx="1996" dy="662" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-1" value="Start- Small Alley, blocked off by truck" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+          <mxGeometry x="-60" y="510" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-3" value="FPS Campaign- Street Level&lt;br&gt;Alone in abandoned city, Right after heli crash&lt;br&gt;&lt;br&gt;Difficult game, can explore + pick up items to survive" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="80" y="264" width="170" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e9yA9R0rII7TygROueSu-5" style="edgeStyle=orthogonalEdgeStyle;shape=link;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=default;" edge="1" parent="1" source="BzA49xTuDbS2A0Y6Psht-5" target="BzA49xTuDbS2A0Y6Psht-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-5" value="Pick up key + Rusty single-shot 12gau off dead body, squeeze through truck to other side" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="80" y="484" width="77.5" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;shape=link;" parent="1" source="BzA49xTuDbS2A0Y6Psht-5" target="BzA49xTuDbS2A0Y6Psht-10" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="280" y="654" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;shape=link;" parent="1" source="BzA49xTuDbS2A0Y6Psht-10" target="BzA49xTuDbS2A0Y6Psht-12" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=link;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="BzA49xTuDbS2A0Y6Psht-10" target="BzA49xTuDbS2A0Y6Psht-19" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="280" y="500" />
+              <mxPoint x="430" y="500" />
+            </Array>
+            <mxPoint x="350" y="445.55555555555554" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;shape=link;" parent="1" source="BzA49xTuDbS2A0Y6Psht-10" target="BzA49xTuDbS2A0Y6Psht-22" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9yA9R0rII7TygROueSu-2" style="edgeStyle=orthogonalEdgeStyle;shape=link;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;strokeColor=default;" edge="1" parent="1" source="BzA49xTuDbS2A0Y6Psht-10" target="e9yA9R0rII7TygROueSu-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-10" value="Main Street - Balkans, 1 enemy on main street" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="220" y="519" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;shape=link;" parent="1" source="BzA49xTuDbS2A0Y6Psht-12" target="BzA49xTuDbS2A0Y6Psht-17" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-12" value="Terrorist HQ set up as money laundering scheme, 3 enemies" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="220" y="700" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;shape=link;" parent="1" source="BzA49xTuDbS2A0Y6Psht-17" target="BzA49xTuDbS2A0Y6Psht-49" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-17" value="Solve Puzzle to access underground" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="220" y="810" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;shape=link;" parent="1" source="BzA49xTuDbS2A0Y6Psht-19" target="BzA49xTuDbS2A0Y6Psht-34" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-19" value="Key Printing shop- gain key to AA building" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="385" y="390" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;verticalAlign=middle;strokeColor=default;shape=link;" parent="1" source="BzA49xTuDbS2A0Y6Psht-22" target="BzA49xTuDbS2A0Y6Psht-34" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="565" y="504" />
+              <mxPoint x="610" y="504" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-22" value="Dept. Store, can pick up oil filter suppressor (only goes on 12gau)" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="580" y="519" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.913;entryY=0.231;entryDx=0;entryDy=0;entryPerimeter=0;shape=link;strokeColor=default;" parent="1" source="BzA49xTuDbS2A0Y6Psht-34" target="BzA49xTuDbS2A0Y6Psht-10" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="568" y="458" />
+              <mxPoint x="568" y="538" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-40" value="One-Way" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="BzA49xTuDbS2A0Y6Psht-38" vertex="1" connectable="0">
+          <mxGeometry x="-0.0985" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-34" value="Logistics area, trucks&lt;br&gt;Rusty Pistol, Neutral NPC attacks if you take it." style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="580" y="390" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;shape=link;" parent="1" source="BzA49xTuDbS2A0Y6Psht-45" target="BzA49xTuDbS2A0Y6Psht-47" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-45" value="Enemy Anti-Air- need C4 from Terrorist HQ" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="370" y="300" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-47" value="Picked up by friendly helicopter" style="ellipse;whiteSpace=wrap;html=1;perimeter=ellipsePerimeter;gradientColor=none;fillColor=default;" parent="1" vertex="1">
+          <mxGeometry x="540" y="300" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=link;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="BzA49xTuDbS2A0Y6Psht-49" target="BzA49xTuDbS2A0Y6Psht-51" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-49" value="Old Train tunnel, many enemies&lt;br&gt;Can Stealth, or all-out attack" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="490" y="810" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;shape=link;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="BzA49xTuDbS2A0Y6Psht-51" target="BzA49xTuDbS2A0Y6Psht-54" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="550" y="680" />
+              <mxPoint x="473" y="680" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-51" value="Power Puzzle, pick up Enemy C4" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="490" y="690" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;shape=link;entryX=1;entryY=1;entryDx=0;entryDy=0;" parent="1" source="BzA49xTuDbS2A0Y6Psht-54" target="BzA49xTuDbS2A0Y6Psht-10" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="609" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BzA49xTuDbS2A0Y6Psht-54" value="Small Sewer section, 2-3 animal enemies" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="378" y="640" width="95" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="e9yA9R0rII7TygROueSu-3" style="edgeStyle=orthogonalEdgeStyle;shape=link;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;" edge="1" parent="1" source="e9yA9R0rII7TygROueSu-1" target="BzA49xTuDbS2A0Y6Psht-45">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9yA9R0rII7TygROueSu-1" value="Building with AA on top, many enemies- Fight your way to the top (only aggro if you unlock door)" style="ellipse;whiteSpace=wrap;html=1;fillColor=default;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="210" y="360" width="120" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
