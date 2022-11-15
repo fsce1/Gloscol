@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using Newtonsoft.Json;
+//using Newtonsoft.Json;
 
 
 public class GameManager : MonoBehaviour
@@ -27,16 +27,16 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.None;
-        PawnsInScene = GameObject.FindObjectsOfType<Pawn>();
         pawnSaveLocation = Path.Combine(Application.persistentDataPath + "/Pawns/");
     }
     #region SERIALIZATION
     public Pawn[] PawnsInScene;
-    JsonSerializerSettings settings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
+    //JsonSerializerSettings settings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
     string pawnSaveLocation;
     public Pawn pawnPrefab;
     public void SerializeAllPawns()
     {
+        PawnsInScene = GameObject.FindObjectsOfType<Pawn>();
         foreach (Pawn pawn in PawnsInScene)
         {
             SerializeThisPawn(pawn);
@@ -44,7 +44,8 @@ public class GameManager : MonoBehaviour
     }
     public void SerializeThisPawn(Pawn p)
     {
-        string output = JsonConvert.SerializeObject(p.saveData, settings);
+        string output = JsonUtility.ToJson(p.saveData, true);
+        //string output = JsonConvert.SerializeObject(p.saveData, settings);
         //JSONConvert really wants to serialize the entire object(including the MonoBehaviour) so it throws a rigidbody error
         //This is why i have used the [JsonProperty] tags
         WriteToFile(output, p.saveData.firstName + p.saveData.lastName);
@@ -59,12 +60,14 @@ public class GameManager : MonoBehaviour
             Debug.Log(pawnData);
             DeserializeThisPawn(pawnData);
         }
+        PawnsInScene = GameObject.FindObjectsOfType<Pawn>();
     }
     public void DeserializeThisPawn(string pawnData)
     {
         Debug.Log(pawnData);
         PawnSaveData pawnSaveData = new PawnSaveData();
-        pawnSaveData = JsonConvert.DeserializeObject<PawnSaveData>(pawnData, settings);
+        pawnSaveData = JsonUtility.FromJson<PawnSaveData>(pawnData);
+        //pawnSaveData = JsonConvert.DeserializeObject<PawnSaveData>(pawnData, settings);
         pawnPrefab.saveData = pawnSaveData;
         Instantiate(pawnPrefab, transform);
     }

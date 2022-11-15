@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class WorldSpaceCursor : MonoBehaviour
 {
+    public static WorldSpaceCursor C;
+    private void Awake()
+    {
+        if (C != null && C != this) Destroy(this);
+        else C = this;
+    }
     public bool BlockUpdate;
-    private MeshRenderer mesh;
+    public MeshRenderer mesh;
+    public Pawn lastPawn;
     public void Start()
     {
         mesh = GetComponent<MeshRenderer>();
@@ -21,12 +28,17 @@ public class WorldSpaceCursor : MonoBehaviour
         // Find the direction to move in
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.collider.CompareTag("Interactable"))
+            if (hit.collider.CompareTag("Pawn"))
             {
-                this.mesh.enabled = false;
-            }
-            else this.mesh.enabled = true;
+                lastPawn = hit.transform.gameObject.GetComponent<Pawn>();
 
+                lastPawn.isHighlighted = true;
+                if (Input.GetMouseButtonDown(0)) lastPawn.isDragging = true;
+            }
+            else if (lastPawn != null)
+            {
+                lastPawn.isHighlighted = false;
+            }
             CursorTargetPos = hit.point - transform.position;
         }
 
