@@ -28,11 +28,13 @@ public class GameManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         PawnsInScene = GameObject.FindObjectsOfType<Pawn>();
+        pawnSaveLocation = Path.Combine(Application.persistentDataPath + "/Pawns/");
     }
     #region SERIALIZATION
-
     public Pawn[] PawnsInScene;
-
+    JsonSerializerSettings settings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
+    string pawnSaveLocation;
+    public Pawn pawnPrefab;
     public void SerializeAllPawns()
     {
         foreach (Pawn pawn in PawnsInScene)
@@ -42,26 +44,39 @@ public class GameManager : MonoBehaviour
     }
     public void SerializeThisPawn(Pawn p)
     {
-        string output = JsonConvert.SerializeObject(p,
-                new JsonSerializerSettings()
-                { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+        string output = JsonConvert.SerializeObject(p.saveData, settings);
         //JSONConvert really wants to serialize the entire object(including the MonoBehaviour) so it throws a rigidbody error
         //This is why i have used the [JsonProperty] tags
-        WriteToFile(output, p);
+        WriteToFile(output, p.saveData.firstName + p.saveData.lastName);
         Debug.Log(output);
     }
-    public void WriteToFile(string data, Pawn p)
+    public void DeserializeAllPawns()
     {
-        string dir = Path.Combine(Application.persistentDataPath + "/Pawns/");
+        FileInfo[] fileInfo = new DirectoryInfo(pawnSaveLocation).GetFiles("*.json");
+        foreach (FileInfo f in fileInfo)
+        {
+            string pawnData = File.ReadAllText(f.FullName);
+            Debug.Log(pawnData);
+            DeserializeThisPawn(pawnData);
+        }
+    }
+    public void DeserializeThisPawn(string pawnData)
+    {
+        Debug.Log(pawnData);
+        PawnSaveData pawnSaveData = new PawnSaveData();
+        pawnSaveData = JsonConvert.DeserializeObject<PawnSaveData>(pawnData, settings);
+        pawnPrefab.saveData = pawnSaveData;
+        Instantiate(pawnPrefab, transform);
+    }
+    public void WriteToFile(string data, string name)
+    {
+        if (!Directory.Exists(pawnSaveLocation)) Directory.CreateDirectory(pawnSaveLocation);
 
-        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-
-        using (StreamWriter sw = new StreamWriter(dir + p.firstName + p.lastName + ".txt"))
+        using (StreamWriter sw = new StreamWriter(pawnSaveLocation + name + ".json"))
         {
             Debug.Log("Writing!");
             sw.WriteLine(data);
         }
     }
-
     #endregion
 }

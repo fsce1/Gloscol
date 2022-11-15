@@ -4,13 +4,11 @@ using UnityEngine;
 using System;
 using Newtonsoft.Json;
 
-[JsonObject(MemberSerialization.OptIn)]
+//[JsonObject(MemberSerialization.OptIn)]
 public class Pawn : MonoBehaviour
 {
-    [JsonProperty]
-    public string firstName = "Jeremy";
-    [JsonProperty]
-    public string lastName = "Hunt";
+    //[JsonProperty]
+    public PawnSaveData saveData;
 
 
     // Start is called before the first frame update
