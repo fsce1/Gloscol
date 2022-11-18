@@ -33,6 +33,7 @@ public class InteractableController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        if (col.CompareTag("GravTrigger")) return;
         Destroy(col.gameObject);
         switch (col.gameObject.tag)
         {

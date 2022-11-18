@@ -19,22 +19,19 @@ public class GameManager : MonoBehaviour
         Left,
         Right
     }
-    public Gravity playerForce;
+
     public bool controlsAreVertical = false;
 
-    public void RotateChar(Vector2 v2)
-    {
 
-    }
     public void ChangeGravDir(Vector2 v2)
     {
-        playerForce.v2 = v2;
-        RotateChar(v2);
-        player.transform.up = -v2;
+        player.gravityDir = v2;
+        player.RotateChar(v2);
+        //player.transform.up = -v2;
     }
     void Start()
     {
-        playerForce = PlayerController.Player.GetComponent<Gravity>();
+
     }
 
     //public Vector3 getPlayerPos()
@@ -44,7 +41,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerForce.v2.y != 0) controlsAreVertical = false;
+        if (player.gravityDir.y != 0) controlsAreVertical = false;
         else controlsAreVertical = true;
         //objToRotateAround.transform.position = lastPlayerPos;
         //if (objToRotateAround.localEulerAngles.z == targetZRot)

@@ -8,6 +8,7 @@ TagManager:
   - Coin
   - HealthPack
   - DamagePack
+  - GravTrigger
   layers:
   - Default
   - TransparentFX
