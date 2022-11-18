@@ -13,35 +13,31 @@ public class PlayerController : MonoBehaviour
     }
 
     bool facingRight = true;
-    bool jump = false;
     bool isGrounded = true;
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
 
-    public Sprite[] idleSprites;
+    //public Sprite[] idleSprites;
     public Animator anim;
     public float animAccelSpeed;
 
     private Vector3 curVelocity = Vector3.zero;
 
-    public float frameTime = 0.5f;
+    //public float frameTime = 0.5f;
     public float runSpeed = 50f;
-    public float jumpDownForce = 10f;
-    public float jumpHeldInAirMultiplier = 20f;
+    public float jumpDownForce = 2f;
     float horizontalMove = 0f;
 
 
-    ConstantForce2D force;
     private void Start()
     {
         sr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        StartCoroutine("idle");
 
         anim = GetComponent<Animator>();
+        grav = GetComponent<Gravity>();
 
-        force = GetComponent<ConstantForce2D>();
     }
 
     private void Update()
@@ -61,54 +57,65 @@ public class PlayerController : MonoBehaviour
 
 
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            jump = true;
-        }
-        transform.rotation = Quaternion.Euler(Vector3.zero);
+        if (Input.GetKeyDown(KeyCode.Space)) Jump();
     }
     private void FixedUpdate()
     {
-        RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, -Vector2.up);
-        for (int i = 0; i < hit.Length; i++)
-        {
-            if (hit[i].collider.tag.Equals("Floor"))
-            {
-                if (hit[i].distance <= 1.7f)
-                {
-                    isGrounded = true;
-                }
-                else isGrounded = false;
-            }
-        }
+        move(horizontalMove);
 
-        move(horizontalMove * Time.fixedDeltaTime, jump);
-        jump = false;
-
-
-        //!isGrounded &&
-        if (rb.velocity.y < 0f)
+        if (!Input.GetKey(KeyCode.Space))
         {
-            rb.AddForce(new Vector3(0f, -jumpDownForce));
-        }
-        if (!Input.GetKey(KeyCode.Space) && rb.velocity.y > 0f)
-        {
-            rb.AddForce(new Vector3(0f, -jumpHeldInAirMultiplier));
+            rb.AddForce(grav.v2 * jumpDownForce);
         }
 
     }
-    private void move(float move, bool jump)
+    Gravity grav;
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("Floor")) isGrounded = true;
+    }
+    private void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("Floor")) isGrounded = false;
+    }
+
+    public void Jump()
+    {
+        if (!isGrounded) return;
+        Debug.Log("Jump" + -grav.v2);
+        rb.AddForce(-grav.v2 * 400);
+
+
+        //RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, grav.v2);
+        //for (int i = 0; i < hit.Length; i++)
+        //{
+        //    if (hit[i].collider.tag.Equals("Floor"))
+        //    {
+        //        if (hit[i].distance <= 1.7f)
+        //        {
+        //            Debug.Log("Jump" + grav.v2);
+        //            rb.AddForce(grav.v2 * 10);
+        //        }
+        //    }
+        //}
+    }
+    private void move(float move)
     {
         Vector3 targetVel;
         if (GameManager.GM.controlsAreVertical) targetVel = new Vector3(rb.velocity.x, move * 10f);
         else targetVel = new Vector3(move * 10f, rb.velocity.y);
 
         rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVel, ref curVelocity, 0.1f);
-        if (jump && isGrounded)
-        {
-            //rb.AddForce(new Vector3(0f, 400f));
-            rb.AddForce(-force.force * 400);
-        }
+        //if (jump && isGrounded)
+        //{
+        //    //rb.AddForce(new Vector3(0f, 400f));
+        //    rb.AddForce(-grav.v2 * 10);
+        //}
+
+
+
+
         if (move > 0 && !facingRight)
         {
             flip();
@@ -126,15 +133,15 @@ public class PlayerController : MonoBehaviour
         scale.x *= -1;
         transform.localScale = scale;
     }
-    IEnumerator idle()
-    {
-        for (int i = 0; i < idleSprites.Length; i++)
-        {
-            sr.sprite = idleSprites[i];
-            i++;
-            yield return new WaitForSeconds(frameTime);
-            yield return 0;
-        }
-        StartCoroutine(idle());
-    }
+    //IEnumerator idle()
+    //{
+    //    for (int i = 0; i < idleSprites.Length; i++)
+    //    {
+    //        sr.sprite = idleSprites[i];
+    //        i++;
+    //        yield return new WaitForSeconds(frameTime);
+    //        yield return 0;
+    //    }
+    //    StartCoroutine(idle());
+    //}
 }

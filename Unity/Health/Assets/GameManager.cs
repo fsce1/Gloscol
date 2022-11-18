@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
         if (GM != null && GM != this) Destroy(this);
         else GM = this;
     }
-
+    public PlayerController player;
     public GravDir curGravDir = GravDir.Down;
     public enum GravDir
     {
@@ -19,15 +19,22 @@ public class GameManager : MonoBehaviour
         Left,
         Right
     }
-    public ConstantForce2D playerForce;
+    public Gravity playerForce;
     public bool controlsAreVertical = false;
+
+    public void RotateChar(Vector2 v2)
+    {
+
+    }
     public void ChangeGravDir(Vector2 v2)
     {
-        playerForce.force = v2 * 9.89f * 10;
+        playerForce.v2 = v2;
+        RotateChar(v2);
+        player.transform.up = -v2;
     }
     void Start()
     {
-        playerForce = PlayerController.Player.GetComponent<ConstantForce2D>();
+        playerForce = PlayerController.Player.GetComponent<Gravity>();
     }
 
     //public Vector3 getPlayerPos()
@@ -37,7 +44,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerForce.force.y != 0) controlsAreVertical = false;
+        if (playerForce.v2.y != 0) controlsAreVertical = false;
         else controlsAreVertical = true;
         //objToRotateAround.transform.position = lastPlayerPos;
         //if (objToRotateAround.localEulerAngles.z == targetZRot)

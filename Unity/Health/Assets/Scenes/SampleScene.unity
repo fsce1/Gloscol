@@ -422,7 +422,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 9.750435
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2370,7 +2370,7 @@ GameObject:
   - component: {fileID: 1803205200}
   - component: {fileID: 1803205206}
   - component: {fileID: 1803205205}
-  - component: {fileID: 1803205207}
+  - component: {fileID: 1803205208}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2456,7 +2456,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1803205199}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.0000004768371, w: 1}
   m_LocalPosition: {x: -3.12, y: -3.32, z: 0}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children: []
@@ -2489,14 +2489,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b3af46e74ed40e4aa90a1e182a5322e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleSprites:
-  - {fileID: 4035959289877228764, guid: 52fd95dbb374d7f4f86e3412bd646bae, type: 3}
   anim: {fileID: 1803205200}
   animAccelSpeed: 2
   frameTime: 0.5
-  runSpeed: 35
+  runSpeed: 1
   jumpDownForce: 10
-  jumpHeldInAirMultiplier: 20
 --- !u!70 &1803205205
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2534,17 +2531,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!247 &1803205207
-ConstantForce2D:
+--- !u!114 &1803205208
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1803205199}
   m_Enabled: 1
-  m_Force: {x: 0, y: -1}
-  m_RelativeForce: {x: 0, y: 0}
-  m_Torque: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7033034e014f9b48a5aab907e0d1124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  v2: {x: 0, y: -1}
+  playerRb: {fileID: 1803205206}
 --- !u!1 &1849862832
 GameObject:
   m_ObjectHideFlags: 0
@@ -2588,8 +2588,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 782acd360b90b3042ada6abdd72fc4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1803205204}
   curGravDir: 1
-  playerForce: {fileID: 0}
+  playerForce: {fileID: 1803205208}
   controlsAreVertical: 0
 --- !u!1 &1981056418
 GameObject:
