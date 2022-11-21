@@ -141,13 +141,18 @@ public class PlayerController : MonoBehaviour
 
         rb.velocity += targetVel;
         float absVel = AbsoluteVel(); //!!!! none of this works. not even AbsoluteVel();
+
+
+
         if (GameManager.GM.controlsAreVertical)
         {
-            if (absVel > maxSpeed) rb.velocity -= new Vector2(0, absVel-maxSpeed);
+            Mathf.Clamp(rb.velocity.y, 0, absVel);
+            //if (absVel > maxSpeed) rb.velocity -= new Vector2(0, absVel-maxSpeed);
         }
         else
         {
-            if (absVel > maxSpeed) rb.velocity -= new Vector2(absVel-maxSpeed - absVel, 0);
+            Mathf.Clamp(rb.velocity.x, 0, absVel);
+            //if (absVel > maxSpeed) rb.velocity -= new Vector2(absVel-maxSpeed - absVel, 0);
 
         }
 
