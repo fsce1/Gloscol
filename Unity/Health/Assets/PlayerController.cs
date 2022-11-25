@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
         else Player = this;
     }
 
-    bool facingRight = true;
     bool isGrounded = true;
 
     private Rigidbody2D rb;
@@ -26,10 +25,11 @@ public class PlayerController : MonoBehaviour
 
     //public float frameTime = 0.5f;
     [Header("Movement")]
-    public float accelSpeed = 50f;
-    public float decelSpeed = 50f;
+    public float moveSpeed = 10;
+    public float frictionAmount = 5;
+    public float knockbackAmount = 2;
     //public float initVel = 50f;
-    public float maxSpeed = 50f;
+
 
     public float jumpDownForce = 2f;
     float horizontalMove = 0f;
@@ -77,15 +77,29 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         rb.AddForce(gravityDir * 9.81f);
-        rb.velocity -= targetVel / decelSpeed;
+        //rb.velocity -= targetVel / decelSpeed;
 
 
-        move(horizontalMove);
+        Move(horizontalMove);
 
         if (!Input.GetKey(KeyCode.Space))
         {
             rb.AddForce(gravityDir * jumpDownForce);
         }
+
+
+        //if (GameManager.GM.controlsAreVertical)
+        //{
+        //    Mathf.Clamp(rb.velocity.y, 0, maxSpeed);
+        //    //if (absVel > maxSpeed) rb.velocity -= new Vector2(0, absVel-maxSpeed);
+        //}
+        //else
+        //{
+        //    Mathf.Clamp(rb.velocity.x, 0, maxSpeed);
+        //    //if (absVel > maxSpeed) rb.velocity -= new Vector2(absVel-maxSpeed - absVel, 0);
+
+        //}
+
 
     }
     public float jumpHeight;
@@ -98,11 +112,6 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionExit2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Floor")) isGrounded = false;
-    }
-
-    public void RotateChar(Vector2 v2)
-    {
-        transform.up = -v2;//!!!!Gradual Rotation
     }
 
     public void Jump()
@@ -125,36 +134,49 @@ public class PlayerController : MonoBehaviour
         //}
     }
     Vector2 targetVel;
-    private void move(float move)
+    private void Move(float move)
     {
-        if (GameManager.GM.controlsAreVertical)
-        {
-            targetVel = new Vector2(0, move * Time.deltaTime * accelSpeed);
 
-        }
-        else
-        {
-            targetVel = new Vector2(move * Time.deltaTime * accelSpeed, 0);
-
-        }
-
-
-        rb.velocity += targetVel;
-        float absVel = AbsoluteVel(); //!!!! none of this works. not even AbsoluteVel();
-
+        var curRbMovement = rb.velocity;
 
 
         if (GameManager.GM.controlsAreVertical)
         {
-            Mathf.Clamp(rb.velocity.y, 0, absVel);
-            //if (absVel > maxSpeed) rb.velocity -= new Vector2(0, absVel-maxSpeed);
+            rb.AddForce(new Vector2(0, move * moveSpeed * frictionAmount));
+            rb.AddForce(new Vector2(0, -curRbMovement.y * frictionAmount));
         }
         else
         {
-            Mathf.Clamp(rb.velocity.x, 0, absVel);
-            //if (absVel > maxSpeed) rb.velocity -= new Vector2(absVel-maxSpeed - absVel, 0);
+            rb.AddForce(new Vector2(move * moveSpeed * frictionAmount, 0));
+            rb.AddForce(new Vector2(-curRbMovement.x * frictionAmount, 0));
 
         }
+
+
+
+
+
+
+
+
+
+        //if (GameManager.GM.controlsAreVertical)
+        //{
+        //    targetVel = new Vector2(0, move * Time.deltaTime * accelSpeed);
+
+        //}
+        //else
+        //{
+        //    targetVel = new Vector2(move * Time.deltaTime * accelSpeed, 0);
+
+        //}
+
+
+        //rb.velocity += targetVel;
+        //float absVel = AbsoluteVel(); //!!!! none of this works. not even AbsoluteVel();
+        //Debug.Log(absVel);
+
+
 
 
         //rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVel, ref curVelocity, 0.1f);
@@ -167,32 +189,72 @@ public class PlayerController : MonoBehaviour
 
 
 
-        if (move > 0 && !facingRight)
+        if (move > 0)
         {
-            flip();
+            sr.flipX = false;
         }
-        else if (move < 0 && facingRight)
+        else if (move < 0)
         {
-            flip();
+            sr.flipX = true;
         }
     }
-    void flip()
+    public void Die()
     {
-        facingRight = !facingRight;
 
-        Vector3 scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;
     }
-    //IEnumerator idle()
-    //{
-    //    for (int i = 0; i < idleSprites.Length; i++)
-    //    {
-    //        sr.sprite = idleSprites[i];
-    //        i++;
-    //        yield return new WaitForSeconds(frameTime);
-    //        yield return 0;
-    //    }
-    //    StartCoroutine(idle());
-    //}
+
+
+    private void OnCollisionEnter2D(Collision collision) //fix
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "Enemy":
+
+                ContactPoint contact = collision.contacts[0];
+                rb.AddForce(collision.transform.position - contact.point * knockbackAmount);
+
+                //ContactPoint2D contact = collision.contacts[0];
+
+
+
+                //rb.velocity -= rb.velocity * knockbackAmount;
+                break;
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        int curHealth = GameManager.GM.curHealth;
+        int score = GameManager.GM.score;
+
+        if (col.CompareTag("GravTrigger")) return;
+        switch (col.gameObject.tag)
+        {
+            case "Coin":
+                Destroy(col.gameObject);
+                score++;
+                break;
+            case "HealthPack":
+                Destroy(col.gameObject);
+                curHealth += 10;
+                break;
+            case "DamagePack":
+                rb.velocity -= rb.velocity * knockbackAmount;
+                curHealth -= 10;
+                break;
+
+        }
+        GameManager.GM.curHealth = curHealth;
+        GameManager.GM.score = score;
+        //IEnumerator idle()
+        //{
+        //    for (int i = 0; i < idleSprites.Length; i++)
+        //    {
+        //        sr.sprite = idleSprites[i];
+        //        i++;
+        //        yield return new WaitForSeconds(frameTime);
+        //        yield return 0;
+        //    }
+        //    StartCoroutine(idle());
+        //}
+    }
 }

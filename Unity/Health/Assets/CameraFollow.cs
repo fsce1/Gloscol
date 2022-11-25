@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public GameObject Player;
-    public float moveSpeed;
+    public float camMoveSpeed = 5;
     Camera cam;
-    public float CameraEndXPos;
+    public Vector2 CameraLimits;
+    public bool isTextureCamera;
     //public Vector3[] CamXposToMoveYAmount;
     //private float OriginalCameraY;
     private void Start()
@@ -17,9 +17,23 @@ public class CameraFollow : MonoBehaviour
     }
     void Update()
     {
-        Vector2 dirToMove = Player.transform.position - transform.position;
-        transform.position += new Vector3(dirToMove.x * Time.deltaTime * moveSpeed, dirToMove.y * Time.deltaTime * moveSpeed);
+        //Vector2 leftBound = 
+        if (isTextureCamera)
+        {
+            transform.position = Camera.main.transform.position;
+            return;
+        }
 
+
+
+
+
+
+
+        PlayerController player = GameManager.GM.player;
+        Vector2 dirToMove = player.transform.position - transform.position;
+        transform.position += new Vector3(dirToMove.x * Time.deltaTime * camMoveSpeed, dirToMove.y * Time.deltaTime * camMoveSpeed);
+        Mathf.Clamp(transform.position.x, CameraLimits.x, CameraLimits.y);
 
         //if (Player.transform.position.x >= transform.position.x)
         //{

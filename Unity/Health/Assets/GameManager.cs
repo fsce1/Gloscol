@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +14,16 @@ public class GameManager : MonoBehaviour
     }
     public PlayerController player;
     public GravDir curGravDir = GravDir.Down;
+    public Transform directionArrow;
+    public Texture2D arrowGraphic;
+
+
+    public int maxHealth = 100;
+    public int curHealth;
+    public int score = 0;
+
+    public TextMeshProUGUI scoreText;
+    public Scrollbar healthSlider;
     public enum GravDir
     {
         Up,
@@ -26,9 +38,30 @@ public class GameManager : MonoBehaviour
     public void ChangeGravDir(Vector2 v2)
     {
         player.gravityDir = v2;
-        player.RotateChar(v2);
+        StartCoroutine(RotateVisual(v2));
+        //player.RotateChar(v2);
         //player.transform.up = -v2;
     }
+
+    public IEnumerator RotateVisual(Vector2 v2)
+    {
+        float rotTime = 0;
+        //transform.up = -v2;//!!!!Make this Gradual Rotation
+        Vector3 initialValue = transform.up;
+        Texture2D newGraphic = arrowGraphic;
+        newGraphic.filterMode = FilterMode.Point;
+
+        while (rotTime <= 1)
+        {
+            directionArrow.transform.up = player.transform.up;
+            player.transform.up = Vector2.Lerp(initialValue, -v2, rotTime);
+            yield return new WaitForSeconds(0.01f);
+            rotTime += 0.05f;
+        }
+        transform.up = -v2;
+        directionArrow.transform.up = -v2;
+    }
+
     void Start()
     {
 
@@ -43,6 +76,10 @@ public class GameManager : MonoBehaviour
     {
         if (player.gravityDir.y != 0) controlsAreVertical = false;
         else controlsAreVertical = true;
+
+
+        scoreText.text = "Score: " + score;
+        healthSlider.size = (float)curHealth / maxHealth;
         //objToRotateAround.transform.position = lastPlayerPos;
         //if (objToRotateAround.localEulerAngles.z == targetZRot)
         //{
