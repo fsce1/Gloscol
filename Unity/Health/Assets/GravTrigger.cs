@@ -16,7 +16,7 @@ public class GravTrigger : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D col)
     {
         if (!col.gameObject.CompareTag("Player")) return;
-        Debug.Log("Player entered");
+        Debug.Log("Changing Gravity to "+dirToChangeTo);
         GameManager.GM.ChangeGravDir(dirToChangeTo);
     }
 

@@ -9,6 +9,7 @@ TagManager:
   - HealthPack
   - DamagePack
   - GravTrigger
+  - Enemy
   layers:
   - Default
   - TransparentFX
