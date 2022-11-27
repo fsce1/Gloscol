@@ -28,10 +28,11 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 10;
     public float frictionAmount = 5;
     public float knockbackAmount = 2;
+    public float terminalVel = 10;
     //public float initVel = 50f;
 
 
-    public float jumpDownForce = 2f;
+    public float jumpDownForce = 5f;
     float horizontalMove = 0f;
 
 
@@ -46,16 +47,25 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        float anyVelocity = Mathf.Clamp(Mathf.Abs((curVelocity.x + 1 * curVelocity.y + 1) - 1) / 25, 0, 1);
-        //Experimental Anim Stuff
-        if (isGrounded && anyVelocity > 0.01f)
+        float moveVel; //seems to work
+        if (GameManager.GM.controlsAreVertical)
         {
-            anim.speed = anyVelocity;
-            Debug.Log(anyVelocity);
+            moveVel = Mathf.Lerp(0, 1, Mathf.Abs(rb.velocity.y / moveSpeed));
+        }
+        else moveVel = Mathf.Lerp(0, 1, Mathf.Abs(rb.velocity.x / moveSpeed));
+        //Experimental Anim Stuff
+        if (isGrounded && moveVel > 0.01f)
+        {
+            anim.speed = moveVel;
+            //Debug.Log(moveVel);
             //foreach (AnimationState state in anim) state.speed = curVelocity.x * animAccelSpeed;
             anim.Play("Base Layer.Walk");
 
         }
+
+
+
+
         else
         {
             anim.Play("Base Layer.Idle");
@@ -67,17 +77,29 @@ public class PlayerController : MonoBehaviour
     }
     public Vector2 gravityDir;
 
-    public float AbsoluteVel()
-    {
-        if (GameManager.GM.controlsAreVertical) return rb.velocity.y;
-        return rb.velocity.x;
-    }
+    //public float AbsoluteVel()
+    //{
+    //    if (GameManager.GM.controlsAreVertical) return rb.velocity.y;
+    //    return rb.velocity.x;
+    //}
 
 
     private void FixedUpdate()
     {
         rb.AddForce(gravityDir * 9.81f);
         //rb.velocity -= targetVel / decelSpeed;
+
+
+
+
+        //LOOK AT THIS.
+
+        ////if (GameManager.GM.controlsAreVertical) //new code i wrote while drunk-ish, for some reason only works if i jump, not at fall at start of level
+        ////{
+        ////    if (rb.velocity.x > terminalVel) rb.velocity += new Vector2(terminalVel, 0) - new Vector2(rb.velocity.x, 0);
+        ////}
+        ////else if (rb.velocity.y > terminalVel) rb.velocity -= new Vector2(0, rb.velocity.y) - new Vector2(0, terminalVel);
+
 
 
         Move(horizontalMove);
@@ -105,18 +127,30 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight;
 
 
-    private void OnCollisionEnter2D(Collision2D col)//!!!!make cleaner
-    {
-        if (col.gameObject.CompareTag("Floor")) isGrounded = true;
-    }
-    private void OnCollisionExit2D(Collision2D col)
-    {
-        if (col.gameObject.CompareTag("Floor")) isGrounded = false;
-    }
+    //private void OnCollisionStay2D(Collision2D col)
+    //{
+    //    Debug.Log(col.gameObject.tag);
+    //    if (col.gameObject.CompareTag("Floor")) isGrounded = true;
+    //}
 
     public void Jump()
     {
+
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, gravityDir, 1f); //!!!!more tipsy code, i think this works tho.
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.collider.tag.Equals("Floor"))
+            {
+                isGrounded = true;
+            }
+            else isGrounded = false;
+        }
+
+
         if (!isGrounded) return;
+
         Debug.Log("Jump" + -gravityDir);
         rb.AddForce(-gravityDir * jumpHeight * 4);
 
@@ -133,7 +167,7 @@ public class PlayerController : MonoBehaviour
         //    }
         //}
     }
-    Vector2 targetVel;
+    //Vector2 targetVel;
     private void Move(float move)
     {
 
@@ -151,13 +185,6 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(new Vector2(-curRbMovement.x * frictionAmount, 0));
 
         }
-
-
-
-
-
-
-
 
 
         //if (GameManager.GM.controlsAreVertical)
@@ -203,26 +230,10 @@ public class PlayerController : MonoBehaviour
 
     }
 
-
-    private void OnCollisionEnter2D(Collision collision) //fix
-    {
-        switch (collision.gameObject.tag)
-        {
-            case "Enemy":
-
-                ContactPoint contact = collision.contacts[0];
-                rb.AddForce(collision.transform.position - contact.point * knockbackAmount);
-
-                //ContactPoint2D contact = collision.contacts[0];
-
-
-
-                //rb.velocity -= rb.velocity * knockbackAmount;
-                break;
-        }
-    }
     private void OnTriggerEnter2D(Collider2D col)
     {
+        Debug.Log(col.gameObject.name);
+
         int curHealth = GameManager.GM.curHealth;
         int score = GameManager.GM.score;
 
@@ -240,6 +251,15 @@ public class PlayerController : MonoBehaviour
             case "DamagePack":
                 rb.velocity -= rb.velocity * knockbackAmount;
                 curHealth -= 10;
+                break;
+            case "Enemy":
+                rb.velocity -= rb.velocity * knockbackAmount;
+
+                //ContactPoint2D contact = collision.contacts[0];
+
+
+
+                //rb.velocity -= rb.velocity * knockbackAmount;
                 break;
 
         }

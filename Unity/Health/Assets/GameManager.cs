@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     }
     public PlayerController player;
     public GravDir curGravDir = GravDir.Down;
+    public Vector2 gravDir;
     public Transform directionArrow;
     public Texture2D arrowGraphic;
 
