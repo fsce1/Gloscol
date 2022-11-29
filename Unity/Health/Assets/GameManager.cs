@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Rendering.PostProcessing;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,10 +14,14 @@ public class GameManager : MonoBehaviour
         else GM = this;
     }
     public PlayerController player;
-    public GravDir curGravDir = GravDir.Down;
-    public Vector2 gravDir;
     public Transform directionArrow;
     public Texture2D arrowGraphic;
+    public Vector2 curGravity;
+
+    public float timeScale;
+
+    //public int cameraDistortionAmount;
+    //public PostProcessVolume ppv;
 
 
     public int maxHealth = 100;
@@ -25,21 +30,15 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI scoreText;
     public Scrollbar healthSlider;
-    public enum GravDir
-    {
-        Up,
-        Down,
-        Left,
-        Right
-    }
+
 
     public bool controlsAreVertical = false;
 
 
     public void ChangeGravDir(Vector2 v2)
     {
-        player.gravityDir = v2;
         StartCoroutine(RotateVisual(v2));
+        curGravity = v2;
         //player.RotateChar(v2);
         //player.transform.up = -v2;
     }
@@ -65,7 +64,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
+        curGravity = new Vector2(0, -1);
     }
 
     //public Vector3 getPlayerPos()
@@ -75,7 +74,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.gravityDir.y != 0) controlsAreVertical = false;
+        //ppv.GetComponent<LensDistortion>().intensity.value = Mathf.Lerp(0, 1, cameraDistortionAmount / 40f);
+        Time.timeScale = timeScale;
+
+
+
+        if (curGravity.y != 0) controlsAreVertical = false;
         else controlsAreVertical = true;
 
 

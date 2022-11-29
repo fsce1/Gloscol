@@ -10,11 +10,12 @@ TagManager:
   - DamagePack
   - GravTrigger
   - Enemy
+  - GravityWell
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PostProcessing
   - Water
   - UI
   - 

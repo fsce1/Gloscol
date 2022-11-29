@@ -12,14 +12,13 @@ public class PlayerController : MonoBehaviour
         else Player = this;
     }
 
-    bool isGrounded = true;
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
 
     //public Sprite[] idleSprites;
     public Animator anim;
-    public float animAccelSpeed;
+    public float animMult;
 
     private Vector3 curVelocity = Vector3.zero;
 
@@ -29,10 +28,11 @@ public class PlayerController : MonoBehaviour
     public float frictionAmount = 5;
     public float knockbackAmount = 2;
     public float terminalVel = 10;
+    public float gravityPower = 2;
     //public float initVel = 50f;
 
 
-    public float jumpDownForce = 5f;
+    public float jumpUpForce = 5f;
     float horizontalMove = 0f;
 
 
@@ -47,6 +47,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+
+
+
+
         float moveVel; //seems to work
         if (GameManager.GM.controlsAreVertical)
         {
@@ -54,9 +58,9 @@ public class PlayerController : MonoBehaviour
         }
         else moveVel = Mathf.Lerp(0, 1, Mathf.Abs(rb.velocity.x / moveSpeed));
         //Experimental Anim Stuff
-        if (isGrounded && moveVel > 0.01f)
+        if (moveVel > 0.01f && IsGrounded())
         {
-            anim.speed = moveVel;
+            anim.speed = moveVel * animMult;
             //Debug.Log(moveVel);
             //foreach (AnimationState state in anim) state.speed = curVelocity.x * animAccelSpeed;
             anim.Play("Base Layer.Walk");
@@ -75,7 +79,6 @@ public class PlayerController : MonoBehaviour
         horizontalMove = Input.GetAxisRaw("Horizontal");
         if (Input.GetKeyDown(KeyCode.Space)) Jump();
     }
-    public Vector2 gravityDir;
 
     //public float AbsoluteVel()
     //{
@@ -86,13 +89,13 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.AddForce(gravityDir * 9.81f);
+        rb.AddForce(GameManager.GM.curGravity * 9.81f * gravityPower);
         //rb.velocity -= targetVel / decelSpeed;
 
 
 
 
-        //LOOK AT THIS.
+        //LOOK AT THIS!!!!!!!!!!!!!!!!!!!! PLEASE!!!!!
 
         ////if (GameManager.GM.controlsAreVertical) //new code i wrote while drunk-ish, for some reason only works if i jump, not at fall at start of level
         ////{
@@ -104,9 +107,9 @@ public class PlayerController : MonoBehaviour
 
         Move(horizontalMove);
 
-        if (!Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && !IsGrounded())
         {
-            rb.AddForce(gravityDir * jumpDownForce);
+            rb.AddForce(-GameManager.GM.curGravity * jumpUpForce);
         }
 
 
@@ -124,6 +127,20 @@ public class PlayerController : MonoBehaviour
 
 
     }
+
+    public bool IsGrounded()
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, GameManager.GM.curGravity, 1f); //!!!!more tipsy code, i think this works tho.
+        bool isGrounded = false;
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.collider.CompareTag("Floor"))
+            {
+                isGrounded = true;
+            }
+        }
+        return isGrounded;
+    }
     public float jumpHeight;
 
 
@@ -136,23 +153,10 @@ public class PlayerController : MonoBehaviour
     public void Jump()
     {
 
+        if (!IsGrounded()) return;
 
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, gravityDir, 1f); //!!!!more tipsy code, i think this works tho.
-
-        foreach (RaycastHit2D hit in hits)
-        {
-            if (hit.collider.tag.Equals("Floor"))
-            {
-                isGrounded = true;
-            }
-            else isGrounded = false;
-        }
-
-
-        if (!isGrounded) return;
-
-        Debug.Log("Jump" + -gravityDir);
-        rb.AddForce(-gravityDir * jumpHeight * 4);
+        Debug.Log("Jump" + -GameManager.GM.curGravity);
+        rb.AddForce(-GameManager.GM.curGravity * jumpHeight * 4);
 
         //RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, grav.v2);
         //for (int i = 0; i < hit.Length; i++)
@@ -229,7 +233,6 @@ public class PlayerController : MonoBehaviour
     {
 
     }
-
     private void OnTriggerEnter2D(Collider2D col)
     {
         Debug.Log(col.gameObject.name);

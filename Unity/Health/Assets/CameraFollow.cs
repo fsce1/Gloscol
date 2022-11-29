@@ -7,7 +7,7 @@ public class CameraFollow : MonoBehaviour
     public float camMoveSpeed = 5;
     Camera cam;
     public Vector2 CameraLimits;
-    public bool isTextureCamera;
+    public bool isntFollowing;
     //public Vector3[] CamXposToMoveYAmount;
     //private float OriginalCameraY;
     private void Start()
@@ -15,10 +15,10 @@ public class CameraFollow : MonoBehaviour
         //OriginalCameraY = transform.position.y;
         cam = GetComponent<Camera>();
     }
-    void Update()
+    void FixedUpdate()
     {
         //Vector2 leftBound = 
-        if (isTextureCamera)
+        if (isntFollowing)
         {
             transform.position = Camera.main.transform.position;
             return;
@@ -33,7 +33,10 @@ public class CameraFollow : MonoBehaviour
         PlayerController player = GameManager.GM.player;
         Vector2 dirToMove = player.transform.position - transform.position;
         transform.position += new Vector3(dirToMove.x * Time.deltaTime * camMoveSpeed, dirToMove.y * Time.deltaTime * camMoveSpeed);
-        Mathf.Clamp(transform.position.x, CameraLimits.x, CameraLimits.y);
+        //Mathf.Clamp(transform.position.x, CameraLimits.x, CameraLimits.y);
+        Vector3 trans = transform.position;
+        trans.x = Mathf.Clamp(trans.x, CameraLimits.x, CameraLimits.y);
+        transform.position = trans;
 
         //if (Player.transform.position.x >= transform.position.x)
         //{
