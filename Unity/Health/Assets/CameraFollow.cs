@@ -5,16 +5,11 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public float camMoveSpeed = 5;
-    Camera cam;
     public Vector2 CameraLimits;
     public bool isntFollowing;
     //public Vector3[] CamXposToMoveYAmount;
     //private float OriginalCameraY;
-    private void Start()
-    {
-        //OriginalCameraY = transform.position.y;
-        cam = GetComponent<Camera>();
-    }
+
     void FixedUpdate()
     {
         //Vector2 leftBound = 
@@ -23,15 +18,7 @@ public class CameraFollow : MonoBehaviour
             transform.position = Camera.main.transform.position;
             return;
         }
-
-
-
-
-
-
-
-        PlayerController player = GameManager.GM.player;
-        Vector2 dirToMove = player.transform.position - transform.position;
+        Vector2 dirToMove = GameManager.GM.player.transform.position - transform.position;
         transform.position += new Vector3(dirToMove.x * Time.deltaTime * camMoveSpeed, dirToMove.y * Time.deltaTime * camMoveSpeed);
         //Mathf.Clamp(transform.position.x, CameraLimits.x, CameraLimits.y);
         Vector3 trans = transform.position;

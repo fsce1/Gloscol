@@ -23,13 +23,9 @@ public class GameManager : MonoBehaviour
     //public int cameraDistortionAmount;
     //public PostProcessVolume ppv;
 
-
-    public int maxHealth = 100;
-    public int curHealth;
     public int score = 0;
 
     public TextMeshProUGUI scoreText;
-    public Scrollbar healthSlider;
 
 
     public bool controlsAreVertical = false;
@@ -78,13 +74,11 @@ public class GameManager : MonoBehaviour
         Time.timeScale = timeScale;
 
 
-
-        if (curGravity.y != 0) controlsAreVertical = false;
+        if (curGravity.y < 0) controlsAreVertical = false;
         else controlsAreVertical = true;
 
 
         scoreText.text = "Score: " + score;
-        healthSlider.size = (float)curHealth / maxHealth;
         //objToRotateAround.transform.position = lastPlayerPos;
         //if (objToRotateAround.localEulerAngles.z == targetZRot)
         //{

@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Floor
   - Coin
-  - HealthPack
   - DamagePack
   - GravTrigger
   - Enemy

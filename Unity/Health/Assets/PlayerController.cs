@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,8 +21,6 @@ public class PlayerController : MonoBehaviour
     public Animator anim;
     public float animMult;
 
-    private Vector3 curVelocity = Vector3.zero;
-
     //public float frameTime = 0.5f;
     [Header("Movement")]
     public float moveSpeed = 10;
@@ -29,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public float knockbackAmount = 2;
     public float terminalVel = 10;
     public float gravityPower = 2;
+    public float jumpHeight;
     //public float initVel = 50f;
 
 
@@ -66,14 +66,10 @@ public class PlayerController : MonoBehaviour
             anim.Play("Base Layer.Walk");
 
         }
-
-
-
-
-        else
-        {
-            anim.Play("Base Layer.Idle");
-        }
+        //else if (moveVel == 0)
+        //{
+        //    anim.Play("Base Layer.Idle");
+        //}
 
 
         horizontalMove = Input.GetAxisRaw("Horizontal");
@@ -141,7 +137,7 @@ public class PlayerController : MonoBehaviour
         }
         return isGrounded;
     }
-    public float jumpHeight;
+
 
 
     //private void OnCollisionStay2D(Collision2D col)
@@ -157,7 +153,7 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log("Jump" + -GameManager.GM.curGravity);
         rb.AddForce(-GameManager.GM.curGravity * jumpHeight * 4);
-
+        anim.Play("Base Layer.Jump");
         //RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, grav.v2);
         //for (int i = 0; i < hit.Length; i++)
         //{
@@ -171,7 +167,6 @@ public class PlayerController : MonoBehaviour
         //    }
         //}
     }
-    //Vector2 targetVel;
     private void Move(float move)
     {
 
@@ -229,15 +224,16 @@ public class PlayerController : MonoBehaviour
             sr.flipX = true;
         }
     }
-    public void Die()
+    public IEnumerator Die(GameObject col)
     {
-
+        rb.velocity -= new Vector2(col.transform.position.x - transform.position.x, col.transform.position.y - transform.position.y).normalized * knockbackAmount;
+        anim.Play("Base Layer.Die");
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
         Debug.Log(col.gameObject.name);
-
-        int curHealth = GameManager.GM.curHealth;
         int score = GameManager.GM.score;
 
         if (col.CompareTag("GravTrigger")) return;
@@ -247,26 +243,15 @@ public class PlayerController : MonoBehaviour
                 Destroy(col.gameObject);
                 score++;
                 break;
-            case "HealthPack":
-                Destroy(col.gameObject);
-                curHealth += 10;
-                break;
             case "DamagePack":
-                rb.velocity -= rb.velocity * knockbackAmount;
-                curHealth -= 10;
+                StartCoroutine(Die(col.gameObject));
                 break;
             case "Enemy":
                 rb.velocity -= rb.velocity * knockbackAmount;
-
-                //ContactPoint2D contact = collision.contacts[0];
-
-
-
-                //rb.velocity -= rb.velocity * knockbackAmount;
                 break;
 
+
         }
-        GameManager.GM.curHealth = curHealth;
         GameManager.GM.score = score;
         //IEnumerator idle()
         //{
