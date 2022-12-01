@@ -66,10 +66,18 @@ public class PlayerController : MonoBehaviour
             anim.Play("Base Layer.Walk");
 
         }
-        //else if (moveVel == 0)
-        //{
-        //    anim.Play("Base Layer.Idle");
-        //}
+        else if (moveVel == 0 && IsGrounded())
+        {
+            anim.Play("Base Layer.Idle");
+        }
+        else if(moveVel >0 && !IsGrounded())
+        {
+            anim.Play("Base Layer.Jump");
+        }
+        else if(moveVel == 0 && !IsGrounded())
+        {
+            anim.Play("Base Layer.JumpIdle");
+        }
 
 
         horizontalMove = Input.GetAxisRaw("Horizontal");
