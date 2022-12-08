@@ -9575,6 +9575,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 519420032}
+  - component: {fileID: 519420035}
   - component: {fileID: 519420030}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
@@ -9750,6 +9751,24 @@ MonoBehaviour:
   m_CropFrameX: 1
   m_CropFrameY: 1
   m_StretchFill: 1
+--- !u!114 &519420035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 807b7c57cc0aa5a46a21f8d6c43cac78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intensity:
+  - 0
+  - 0
+  mats:
+  - {fileID: 2100000, guid: 5e31797075b0b3543b5cedbf0ee05672, type: 2}
+  - {fileID: 2100000, guid: 5e31797075b0b3543b5cedbf0ee05672, type: 2}
 --- !u!1 &548898648
 GameObject:
   m_ObjectHideFlags: 0

@@ -68,14 +68,17 @@ public class PlayerController : MonoBehaviour
         }
         else if (moveVel == 0 && IsGrounded())
         {
+            anim.speed = 1;
             anim.Play("Base Layer.Idle");
         }
         else if(moveVel >0 && !IsGrounded())
         {
+            anim.speed = 1;
             anim.Play("Base Layer.Jump");
         }
         else if(moveVel == 0 && !IsGrounded())
         {
+            anim.speed = 1;
             anim.Play("Base Layer.JumpIdle");
         }
 
