@@ -9764,7 +9764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectMaterials:
-  - {fileID: 2100000, guid: 001b5a231bf195d46b6945c9fdf08932, type: 2}
+  - {fileID: 2100000, guid: e7b4c3346833bc541b005fce9ace0d5e, type: 2}
 --- !u!1 &548898648
 GameObject:
   m_ObjectHideFlags: 0
@@ -11233,7 +11233,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2083906489
 Transform:
   m_ObjectHideFlags: 0
