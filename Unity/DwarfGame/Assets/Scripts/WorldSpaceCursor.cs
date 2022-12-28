@@ -19,26 +19,45 @@ public class WorldSpaceCursor : MonoBehaviour
     }
     public void Update()
     {
+
+
         if (BlockUpdate) return;
+
+
+        foreach (Pawn p in GameManager.GM.PawnsInScene())
+        {
+            if (p.isHighlighted)
+            {
+                mesh.enabled = false;
+            }
+        }
+
+
+
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         Vector3 CursorTargetPos = new Vector3(0, 0);
-
+        //bool hasChangedPawn = false;
         // Find the direction to move in
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.collider.CompareTag("Pawn"))
-            {
-                lastPawn = hit.transform.gameObject.GetComponent<Pawn>();
+            //if ( !hasChangedPawn && hit.collider.CompareTag("Pawn"))
+            //{
+            //    lastPawn = hit.transform.gameObject.GetComponent<Pawn>();
 
-                lastPawn.isHighlighted = true;
-                if (Input.GetMouseButtonDown(0)) lastPawn.isDragging = true;
-            }
-            else if (lastPawn != null)
-            {
-                lastPawn.isHighlighted = false;
-            }
+            //    lastPawn.isHighlighted = true;
+            //    if (Input.GetMouseButton(0)) lastPawn.isDragging = true;
+            //    hasChangedPawn = true;
+            //}
+            //else if (!hit.collider.CompareTag("Pawn"))
+            //{
+            //    hasChangedPawn = false;
+            //}
+            //else if (lastPawn != null)
+            //{
+            //    lastPawn.isHighlighted = false;
+            //}
             CursorTargetPos = hit.point - transform.position;
         }
 

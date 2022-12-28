@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.Tilemaps;
 //using Newtonsoft.Json;
 
 
@@ -28,16 +29,20 @@ public class GameManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         pawnSaveLocation = Path.Combine(Application.persistentDataPath + "/Pawns/");
+        AddLowCover();
     }
     #region SERIALIZATION
-    public Pawn[] PawnsInScene;
+    public Pawn[] PawnsInScene()
+    {
+        return GameObject.FindObjectsOfType<Pawn>();
+    }
     //JsonSerializerSettings settings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
     string pawnSaveLocation;
     public Pawn pawnPrefab;
     public void SerializeAllPawns()
     {
-        PawnsInScene = GameObject.FindObjectsOfType<Pawn>();
-        foreach (Pawn pawn in PawnsInScene)
+        //PawnsInScene = GameObject.FindObjectsOfType<Pawn>();
+        foreach (Pawn pawn in PawnsInScene())
         {
             SerializeThisPawn(pawn);
         }
@@ -60,7 +65,6 @@ public class GameManager : MonoBehaviour
             Debug.Log(pawnData);
             DeserializeThisPawn(pawnData);
         }
-        PawnsInScene = GameObject.FindObjectsOfType<Pawn>();
     }
     public void DeserializeThisPawn(string pawnData)
     {
@@ -82,4 +86,106 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
+
+
+
+    #region GRIDSYSTEM
+    public Tilemap tilemap;
+    public GameObject lowCoverPrefab;
+    public Vector2Int bounds;
+    public void AddLowCover()
+    {
+
+        //for (int x = lowCoverTilemap.cellBounds.min.x; x < lowCoverTilemap.cellBounds.max.x; x++)
+        //{
+        //    for (int y = lowCoverTilemap.cellBounds.min.y; y < lowCoverTilemap.cellBounds.max.y; y++)
+        //    {
+        //        for (int z = lowCoverTilemap.cellBounds.min.z; z < lowCoverTilemap.cellBounds.max.z; z++)
+        //        {
+
+
+        for (int x = bounds.x; x < bounds.y; x++)
+        {
+            for (int y = bounds.x; y < bounds.y; y++)
+            {
+                for (int z = bounds.x; z < bounds.y; z++)
+                {
+                    Vector3Int v3 = new Vector3Int(x, y, z);
+                    Vector3Int v3worldspace = new Vector3Int(x, z, y);
+
+                    TileBase t = tilemap.GetTile(v3);
+                    if (t != null){
+
+
+                        //im crossfaded
+
+                        Material mat = new Material("Standard");
+                        //mat.color = t.GetTileData(v3, tilemap, t);
+
+                        switch (t.name)
+                        {
+                            case "Floor":
+                                break;
+                            case "LowCover":
+                                ////Debug.Log(t.name);
+
+                                transform.position = v3worldspace;
+                                GameObject gobj = Instantiate(lowCoverPrefab, this.transform);
+                                gobj.transform.SetParent(null);
+
+                                break;
+                            case "HighCover":
+                                ////Debug.Log(t.name);
+
+                                transform.position = v3worldspace;
+                                gobj = Instantiate(lowCoverPrefab, this.transform); gobj.transform.SetParent(null);
+                                transform.position += new Vector3(0, 1, 0);
+                                gobj = Instantiate(lowCoverPrefab, this.transform); gobj.transform.SetParent(null);
+
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        transform.position = Vector3.zero;
+        tilemap.gameObject.SetActive(false);
+        //foreach (TileBase t in lowCoverTilemap.GetTilesBlock(new BoundsInt(new Vector3Int(0, 0, 0), bounds)))
+        //{
+        //    Debug.Log(t.ToString());
+        //    Debug.Log(t.name);
+        //    //if (t.color.grayscale > 0.5)
+        //    //{
+        //    //    GameObject gobj = Instantiate(lowCoverPrefab, null);
+        //    //    gobj.transform.position = t.gameObject.transform.position;
+        //    //}
+        //}
+
+        //for (int i = -10; i < 10; i++)
+        //{
+        //    AddLowCoverPer(new Vector3Int(i, 0, 0));
+        //    AddLowCoverPer(new Vector3Int(0, i, 0));
+        //}
+    }
+    //public void AddLowCoverPer(Vector3Int v3i)
+    //{
+    //    Color t = lowCoverTilemap.GetColor(v3i);
+    //    Debug.Log(t.ToString());
+    //    if (t.grayscale > 0.5)
+    //    {
+    //        GameObject gobj = Instantiate(lowCoverPrefab, null);
+    //        gobj.transform.position = v3i;
+    //    }
+    //}
+    #endregion
+
+    #region GRIDSYSTEMMOVEMENT
+
+    public bool moveOnGrid = true;
+
+
+
+    #endregion
 }
+
+
