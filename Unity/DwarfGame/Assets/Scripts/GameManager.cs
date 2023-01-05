@@ -93,6 +93,27 @@ public class GameManager : MonoBehaviour
     public Tilemap tilemap;
     public GameObject lowCoverPrefab;
     public Vector2Int bounds;
+    public enum types
+    {
+        Floor,
+        Low,
+        High
+    }
+public enum mats
+{
+        Bricks01,
+        Concrete01,
+        Dirt01
+}
+
+
+
+
+
+
+
+
+
     public void AddLowCover()
     {
 
@@ -113,14 +134,26 @@ public class GameManager : MonoBehaviour
                     Vector3Int v3 = new Vector3Int(x, y, z);
                     Vector3Int v3worldspace = new Vector3Int(x, z, y);
 
-                    TileBase t = tilemap.GetTile(v3);
-                    if (t != null){
+                    Tile t = (Tile)tilemap.GetTile(v3);
+                    if (t != null)
+                    {
 
 
-                        //im crossfaded
+                        types thisCoverType = types.Floor;
 
-                        Material mat = new Material("Standard");
+
                         //mat.color = t.GetTileData(v3, tilemap, t);
+
+                        switch (t.name)
+                        {
+                             case string a when a.StartsWith("l_"):
+                                thisCoverType = types.Low;
+                                break;
+                            case string a when a.StartsWith("h_"):
+                                thisCoverType = types.High;
+                                break;
+                        }
+
 
                         switch (t.name)
                         {
@@ -142,6 +175,14 @@ public class GameManager : MonoBehaviour
                                 transform.position += new Vector3(0, 1, 0);
                                 gobj = Instantiate(lowCoverPrefab, this.transform); gobj.transform.SetParent(null);
 
+                                break;
+                            case "Bricks":
+                                Material mat = new Material(Shader.Find("Standard"));
+                                transform.position = v3worldspace;
+                                gobj = Instantiate(lowCoverPrefab, this.transform); gobj.transform.SetParent(null);
+                                MeshRenderer mesh = gobj.GetComponentInChildren<MeshRenderer>();
+                                mat.mainTexture = t.sprite.texture;
+                                mesh.material = mat;
                                 break;
                         }
                     }
