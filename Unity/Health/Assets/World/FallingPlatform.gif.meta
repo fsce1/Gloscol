@@ -120,7 +120,7 @@ TextureImporter:
       213: -1461684102484203271
     second: FallingPlatform_38
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -141,6 +141,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -179,6 +180,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -194,6 +196,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -1036,6 +1050,46 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      FallingPlatform_31: 7343975731760351854
+      FallingPlatform_18: 8041342297372576789
+      FallingPlatform_24: 8747268765083114192
+      FallingPlatform_32: 5148700813943303533
+      FallingPlatform_20: -440088581539953418
+      FallingPlatform_10: -3722270371435108753
+      FallingPlatform_16: -4954432114497416713
+      FallingPlatform_26: -6262800602946609254
+      FallingPlatform_7: -412121987987209163
+      FallingPlatform_11: -489486365106268289
+      FallingPlatform_19: -1336017219891049597
+      FallingPlatform_21: -808570080205417854
+      FallingPlatform_25: -5041308628060978480
+      FallingPlatform_38: -1461684102484203271
+      FallingPlatform_29: 1074774151000922630
+      FallingPlatform_35: -1441265688460755872
+      FallingPlatform_34: -8151364441974447833
+      FallingPlatform_3: -98556363236952894
+      FallingPlatform_9: 6093845612336892145
+      FallingPlatform_27: 2207423899281294653
+      FallingPlatform_17: -8526273794462315170
+      FallingPlatform_4: -7505496787240083598
+      FallingPlatform_0: -4314440204327429562
+      FallingPlatform_5: -5584851579276820264
+      FallingPlatform_8: -7845557060582475785
+      FallingPlatform_36: -2350806185192088954
+      FallingPlatform_12: 132437421577398447
+      FallingPlatform_28: -4434874139281926942
+      FallingPlatform_22: -1931735265006154442
+      FallingPlatform_1: 4655729412942762893
+      FallingPlatform_15: 6292670849694502278
+      FallingPlatform_33: -299757890527969992
+      FallingPlatform_13: 3997361406972688317
+      FallingPlatform_23: 532371000732524604
+      FallingPlatform_6: 6105254316050880076
+      FallingPlatform_2: 64375919205600973
+      FallingPlatform_30: 2425896866433525080
+      FallingPlatform_37: -7341055469062797824
+      FallingPlatform_14: -8521904574521146073
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
